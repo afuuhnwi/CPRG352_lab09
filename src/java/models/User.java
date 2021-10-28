@@ -17,6 +17,15 @@ public class User implements Serializable{
     private String lname;
     private String password;
     private String role;
+
+    public User(String email,String fname, String lname, String role) {
+        this.email = email;
+        this.fname = fname;
+        this.lname = lname;
+        this.role = role;
+    }
+    
+    
     
     public User() {
         this.email = "";
