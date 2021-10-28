@@ -11,10 +11,10 @@ import java.sql.Statement;
 
 /**
  *
- * @author 794974
+ * @author djtsa
  */
 public class DBUtil {
-     public static void closePreparedStatement(Statement ps) {
+        public static void closePreparedStatement(Statement ps) {
         try {
             if (ps != null) {
                 ps.close();
