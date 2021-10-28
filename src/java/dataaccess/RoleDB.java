@@ -19,29 +19,6 @@ import models.User;
  */
 public class RoleDB {
     
-    /*
-    
-     String sql = "SELECT * FROM note WHERE owner=?";
-        
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, owner);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                int noteId = rs.getInt(1);
-                String title = rs.getString(2);
-                String contents = rs.getString(3);
-                Note note = new Note(noteId, title, contents, owner);
-                notes.add(note);
-            }
-        } finally {
-            DBUtil.closeResultSet(rs);
-            DBUtil.closePreparedStatement(ps);
-            cp.freeConnection(con);
-        }
-
-        return notes;
-*/
     public List<User> getAll() throws SQLException{
         
         List<User> users = new ArrayList<>();
