@@ -17,6 +17,15 @@ public class User implements Serializable{
     private String lname;
     private String password;
     private String role;
+
+    public User(String email,String fname, String lname, String role) {
+        this.email = email;
+        this.fname = fname;
+        this.lname = lname;
+        this.role = role;
+    }
+    
+    
     
     public User() {
         this.email = "";
@@ -34,6 +43,14 @@ public class User implements Serializable{
         this.lname = lname;
         this.password = password;
         this.role = role;
+    }
+
+    public User(int i, String email, String atrue, String firstname, String lastname, String password, int role) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public User(int i, String email, boolean active, String firstname, String lastname, String password, int role) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getEmail() {
