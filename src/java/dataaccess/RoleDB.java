@@ -29,18 +29,19 @@ public class RoleDB {
         PreparedStatement ps = null;
         ResultSet rs = null;
         
-        String selectAll = "SELECT `email`,`first_name`,`last_name`,`role_name` FROM user,role \n" +
+        String selectAll = "SELECT `email`, `active` ,`first_name`,`last_name`,`role_name` FROM user,role \n" +
                            "WHERE `role_id` = `role`;";
         try{
             ps = connect.prepareStatement(selectAll);
             rs = ps.executeQuery();
             while(rs.next()){
                 String email = rs.getString(1);
-                String firstName = rs.getString(2);
-                String lastName = rs.getString(3);
-                String roleName = rs.getString(4);
+                Boolean active = rs.getBoolean(2);
+                String firstName = rs.getString(3);
+                String lastName = rs.getString(4);
+                String roleName = rs.getString(5);
                 
-                User userobj = new User( email,firstName, lastName, roleName);
+                User userobj = new User( email,active ,firstName, lastName, roleName);
                 
                 users.add(userobj);
                 
@@ -103,12 +104,12 @@ public class RoleDB {
             ps.setString(1, email);
             rs = ps.executeQuery();
             if(rs.next()) {
-                Boolean status = rs.getBoolean(2);
+                Boolean active = rs.getBoolean(2);
                 String fname = rs.getString(3);
                 String lname = rs.getString(4);
                 String password = rs.getString(5);
                 String role = rs.getString(6);
-                user = new User(email, status, fname, lname, password, role);
+                user = new User(email, active, fname, lname, password, role);
             }          
         } finally {
             DBUtil.closeResultSet(rs);

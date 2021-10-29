@@ -50,10 +50,9 @@
                
                      <tr>
                     <th>Email</th>
-                    <th>First Name</th>
-                    
-                    <th>Last Name</th>
-                   
+                    <th>Active</th>
+                    <th>First Name</th>                   
+                    <th>Last Name</th>                  
                     <th>Role</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -61,9 +60,12 @@
                     <c:forEach var="user" items="${user}">
                         <tr>
                         <td><c:out value="${user.email}"></c:out></td>
+                        <td><c:out value="${user.active}"></c:out></td>
                         <td><c:out value="${user.fname}"></c:out></td>
                         <td><c:out value="${user.lname}"></c:out></td>
                         <td><c:out value="${user.role}"></c:out></td>
+                        
+                        <td></td>
                     </tr>
                     </c:forEach>
                     
