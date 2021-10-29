@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.User;
 
 /**
@@ -53,5 +55,38 @@ public class RoleDB {
         }
         return users;
         
+    }
+    
+    public void insertNewUser(User user){
+        
+            ConnectionPool cp = ConnectionPool.getInstance();
+            Connection connect = cp.getConnection();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            
+            String insertQuery =
+                    "INSERT INTO user "
+                    + "(email,active,first_name,last_name,password,role)"
+                    + "VALUES"
+                    + "(?,?,?,?,?,?)";
+            
+            try {
+            
+            ps = connect.prepareStatement(insertQuery);
+            ps.setString(1, user.getEmail());
+            ps.setBoolean(2, user.getActive());
+            ps.setString(3, user.getFname());
+            ps.setString(4, user.getLname());
+            ps.setString(5, user.getPassword());
+            ps.setString(6, user.getRole());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            cp.freeConnection(connect);
+            }    
     }
 }

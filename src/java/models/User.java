@@ -45,6 +45,14 @@ public class User implements Serializable{
         this.role = role;
     }
 
+    public User(int i, String email, String atrue, String firstname, String lastname, String password, int role) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public User(int i, String email, boolean active, String firstname, String lastname, String password, int role) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getEmail() {
         return email;
     }

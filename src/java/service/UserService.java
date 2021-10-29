@@ -21,5 +21,11 @@ public class UserService {
     List<User> user = role.getAll();
     return user;
       }
-            
+    
+    public void insert(String email,boolean active ,String firstname,String lastname,String password,String role ){
+        User user = new User(email,active,firstname,lastname,password,role);
+        RoleDB insertRole = new RoleDB();
+        insertRole.insertNewUser(user);
+        
+    }
 }

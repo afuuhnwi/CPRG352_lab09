@@ -38,6 +38,44 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+          UserService user = new UserService();
+          String action = request.getParameter("action");
+          String email = request.getParameter("email");
+          String firstname = request.getParameter("firstName");
+          String lastname = request.getParameter("lastName");
+          String password = request.getParameter("password");
+          String role = request.getParameter("systemRole");
+          boolean active;
+          //int roleNum = Integer.parseInt(role);
+          active = request.getParameter("active") != null;
+        System.out.println("code runs till here!!");
+        
+        switch(action){
+            case "adduser": 
+               
+                System.out.println("if statment holds true");
+            user.insert(email, active, firstname, lastname, password,role);
+            request.setAttribute("addSuccess", true);
+            
+            try {
+            List<User> userobj = user.getALL();
+            request.setAttribute("user", userobj);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("DatabaseError", true);
+        }
+            break;
+                 
+                
+        }
+        //if(request.getAttribute("adduser")!= null){
+             //System.out.println("if statment holds true");
+            //user.insert(email, active, firstname, lastname, password,Integer.parseInt(role));
+           // request.setAttribute("addSuccess", true);
+           // getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+       // return;
+        
+        
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
         return;
         
