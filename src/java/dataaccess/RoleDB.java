@@ -89,4 +89,37 @@ public class RoleDB {
             cp.freeConnection(connect);
             }    
     }
+    
+    public User get(String email) throws Exception {
+        User user = null;
+        ConnectionPool cp = ConnectionPool.getInstance();
+        Connection con = cp.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql ="SELECT * FROM user WHERE email=?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                Boolean status = rs.getBoolean(2);
+                String fname = rs.getString(3);
+                String lname = rs.getString(4);
+                String password = rs.getString(5);
+                String role = rs.getString(6);
+                user = new User(email, status, fname, lname, password, role);
+            }          
+        } finally {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closePreparedStatement(ps);
+            cp.freeConnection(con);
+        }
+        
+        return user;
+        
+    }
+    
+    
+    
 }
