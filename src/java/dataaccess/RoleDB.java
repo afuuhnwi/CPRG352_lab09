@@ -114,12 +114,11 @@ public class RoleDB {
             DBUtil.closeResultSet(rs);
             DBUtil.closePreparedStatement(ps);
             cp.freeConnection(con);
-        }
-        
-        return user;
-        
+            
+        }       
+        return user;       
     }
-    
+    //comment
     
     
 }
