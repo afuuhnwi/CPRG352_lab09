@@ -85,12 +85,23 @@ public class UserServlet extends HttpServlet {
                 String editEmail= newUser.getEmail();
                 String editFname = newUser.getFname() ;
                 String editLname = newUser.getLname();
-                String editRole = newUser.getRole();
-                
+                String editRole = newUser.getRole();               
                 request.setAttribute("editEmail", editEmail);
                 request.setAttribute("editFname", editFname);
                 request.setAttribute("editLname", editLname);
                 request.setAttribute("editRole", editRole);
+                
+                try {
+            List<User> userobj = user.getALL();
+            request.setAttribute("user", userobj);
+            } catch (SQLException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("EditUserError", true);
+            }
+                
+            case "edit":
+                
+                
                 
                 
             case "deleteuser":    
