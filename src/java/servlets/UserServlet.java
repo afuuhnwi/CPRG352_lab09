@@ -46,9 +46,21 @@ public class UserServlet extends HttpServlet {
           String password = request.getParameter("password");
           String role = request.getParameter("systemRole");
           boolean active;
+          
+          
           //int roleNum = Integer.parseInt(role);
           active = request.getParameter("active") != null;
         System.out.println("code runs till here!!");
+        
+        // added a "," to the hidden values.
+        // if the comma is found email was also passed and can
+        // be used for deleting or updating a specific user
+        
+        if(action.contains(",")) {
+            String [] str = action.split(",");
+            action = str[0];
+            String incomingEmail = str[1];
+        }
         
         switch(action){
             case "adduser": 
@@ -64,6 +76,12 @@ public class UserServlet extends HttpServlet {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
         }
+        
+            case "edituser":
+                
+                
+            case "deleteuser":    
+                
             break;
                  
                 

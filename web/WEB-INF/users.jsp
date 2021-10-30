@@ -64,8 +64,15 @@
                         <td><c:out value="${user.fname}"></c:out></td>
                         <td><c:out value="${user.lname}"></c:out></td>
                         <td><c:out value="${user.role}"></c:out></td>
+                        <form method="POST" action ="users">
+                            <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                            <input type="hidden" name="action" value="edituser,${user.email}">
+                        </form>
+                        <form method="POST" action ="users">
+                            <td><button class="btn"><i class="fa fa-trash"></i></button></td>
+                            <input type="hidden" name="action" value="deleteuser,${user.email}">
+                        </form>
                         
-                        <td></td>
                     </tr>
                     </c:forEach>
                     
@@ -83,9 +90,9 @@
             
             <h2>Edit Users</h2>
             <form method="POST" action="users">
-            <input type="text" name="editEmail" value=""><br>
-            <input type="text" name="editFirstName" value=""><br>
-            <input type="text" name="editLastName" value=""><br>
+            <input type="text" name="editEmail" value="" placeholder="Email"><br>
+            <input type="text" name="editFirstName" value="" placeholder="First Name"><br>
+            <input type="text" name="editLastName" value="" placeholder="Last Name"><br>
             <select name="editSystemRole" id="editSystemRole">
                 <option value="" selected></option>
                 <option value="1">System Admin</option>
