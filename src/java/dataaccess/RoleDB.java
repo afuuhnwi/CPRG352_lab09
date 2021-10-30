@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.DispatcherType;
 import models.User;
 
 /**
@@ -120,6 +121,34 @@ public class RoleDB {
         return user;       
     }
     
+    public User updateUser(String email) throws Exception{
+        ConnectionPool cp = ConnectionPool.getInstance();
+        Connection con = cp.getConnection();
+        PreparedStatement ps = null;
+        String sql = "Update user SET fname=?, lname=?, role=? WHERE email=?";
+        User user = new User();
+        user = get(email);
+        String originalEmail = user.getEmail();
+        
+        if(email.equals(originalEmail)  ) {
+            try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, user.getFname());
+            ps.setString(2, user.getLname());
+            ps.setString(3, user.getRole());
+            ps.executeUpdate();
+            }finally {
+                DBUtil.closePreparedStatement(ps);
+                cp.freeConnection(con);
+            } 
+            
+            
+        }
+        
+        
+        return user;
+        
+    }
     
     
 }

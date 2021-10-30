@@ -78,10 +78,11 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("DatabaseError", true);
         }
         
-            case "edituser":
+            break;  
+            
+        case "edituser":
                 User newUser = new User();
-                newUser = user.edit(incomingEmail);
-                
+                newUser = user.edit(incomingEmail);               
                 String editEmail= newUser.getEmail();
                 String editFname = newUser.getFname() ;
                 String editLname = newUser.getLname();
@@ -91,16 +92,18 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("editLname", editLname);
                 request.setAttribute("editRole", editRole);
                 
-                try {
-            List<User> userobj = user.getALL();
-            request.setAttribute("user", userobj);
-            } catch (SQLException ex) {
-            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("EditUserError", true);
+            try {
+                List<User> userobj = user.getALL();
+                request.setAttribute("user", userobj);
+            }catch (SQLException ex) {
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("EditUserError", true);
             }
+            break;            
+        case "update":
                 
-            case "edit":
-                
+                User updateUser = new User();
+                updateUser = user.update(incomingEmail);
                 
                 
                 

@@ -38,7 +38,19 @@ public class UserService {
         } catch (Exception ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
         return user;
     }
+    public User update(String email) {
+        RoleDB updateUser = new RoleDB();
+        User user = new User();
+        
+        try {
+            user= updateUser.updateUser(email);
+        } catch (Exception ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+    
+    
 }
