@@ -8,6 +8,8 @@ package service;
 import dataaccess.RoleDB;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.User;
 
 /**
@@ -27,5 +29,16 @@ public class UserService {
         RoleDB insertRole = new RoleDB();
         insertRole.insertNewUser(user);
         
+    }
+    public User edit(String email) {
+        RoleDB editUser = new RoleDB();
+        User user = new User();
+        try {      
+            user = editUser.get(email);
+        } catch (Exception ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+        return user;
     }
 }

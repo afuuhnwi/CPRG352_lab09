@@ -46,6 +46,7 @@ public class UserServlet extends HttpServlet {
           String password = request.getParameter("password");
           String role = request.getParameter("systemRole");
           boolean active;
+          String incomingEmail = "";
           
           
           //int roleNum = Integer.parseInt(role);
@@ -59,7 +60,7 @@ public class UserServlet extends HttpServlet {
         if(action.contains(",")) {
             String [] str = action.split(",");
             action = str[0];
-            String incomingEmail = str[1];
+            incomingEmail = str[1];
         }
         
         switch(action){
@@ -78,6 +79,18 @@ public class UserServlet extends HttpServlet {
         }
         
             case "edituser":
+                User newUser = new User();
+                newUser = user.edit(incomingEmail);
+                
+                String editEmail= newUser.getEmail();
+                String editFname = newUser.getFname() ;
+                String editLname = newUser.getLname();
+                String editRole = newUser.getRole();
+                
+                request.setAttribute("editEmail", editEmail);
+                request.setAttribute("editFname", editFname);
+                request.setAttribute("editLname", editLname);
+                request.setAttribute("editRole", editRole);
                 
                 
             case "deleteuser":    
