@@ -94,7 +94,7 @@
             <input type="text" name="editFirstName" value="${editFname}" placeholder="First Name"><br>
             <input type="text" name="editLastName" value="${editLname}" placeholder="Last Name"><br>
             <select name="editSystemRole" id="editSystemRole">
-                <option value="${editRole}" selected></option>
+                <option value="" selected>${editRole}</option>
                 <option value="1">System Admin</option>
                 <option value="2">Regular User</option>
                 <option value="3">Company Admin</option>
