@@ -10,6 +10,7 @@
 <html>
     <head>
          <link rel="stylesheet" href="style/style.css">
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JDBC Users</title>
     </head>
@@ -24,7 +25,7 @@
                 <input type="text" name="email" value="" placeholder="Email"><br>
                 <input type="text" name="firstName" value="" placeholder="First Name"><br>
                 <input type="text" name="lastName"  value="" placeholder="Last Name"><br>
-                <input type="text" name="password" value="" placeholder="Password"><br>
+                <input type="password" name="password" value="" placeholder="Password"><br>
                 <input type="checkbox" name="active" value=""> Active<br> 
                 <select name="systemRole" id="systemRole">
                     <option value="" disabled selected>Select System Role</option>
@@ -69,23 +70,19 @@
                             <input type="hidden" name="action" value="edituser,${user.email}">
                         </form>
                         <form method="POST" action ="users">
-                            <td><input type="submit" value="&#xf2ed;"></td>
+                            <td><button class="btn"><i class="fa fa-trash"></i></button></td>
                             <input type="hidden" name="action" value="deleteuser,${user.email}">
+                            <input type="hidden" name="actionVal" value="${user.email}">
                         </form>
                         
                     </tr>
                     </c:forEach>
-                    
-                
-                    
-                
+                   
             </table>
                 
                 
          </div>
         
-        
-      
         <div class="editUser">
             
             <h2>Edit Users</h2>
@@ -102,6 +99,7 @@
                 <input type="submit"  value="Save">
                  <input type="hidden" name="action" value="update,${editEmail}"><br>
                 <input type="submit" value="Cancel">
+                <input type="hidden" value="action" value="cancel">
                 
             </form>
         </div>

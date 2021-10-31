@@ -53,5 +53,11 @@ public class UserService {
         
     }
     
+    public void delete(String email){
+        RoleDB deletUser = new RoleDB();
+        User user = new User(email);
+        deletUser.deleteUser(user);
+    }
+    
     
 }

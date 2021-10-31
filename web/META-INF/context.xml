@@ -2,7 +2,7 @@
 <Context path="/Lab_07_JDBC">
     <Resource
         name="jdbc/userdb"
-        url="jdbc:mysql://localhost:3308/userdb" 
+        url="jdbc:mysql://localhost:3307/userdb" 
         username="root"
         password="password"
         maxActive="100"

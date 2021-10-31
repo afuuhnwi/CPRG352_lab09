@@ -187,6 +187,34 @@ public class RoleDB {
         return user;
         
     }
+    public void deleteUser(User user){
+        
+        ConnectionPool cp = ConnectionPool.getInstance();
+        PreparedStatement ps = null;
+        Connection connect = cp.getConnection();
+        
+        
+        
+        
+        
+        String deleteQuery = "DELETE FROM user WHERE email= ?";
+        
+        try {
+            ps = connect.prepareStatement(deleteQuery);
+            ps.setString(1, user.getEmail());
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDB.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            
+            DBUtil.closePreparedStatement(ps);
+            cp.freeConnection(connect);
+           
+                
+        }
+   
+    }
     
     
 }

@@ -48,7 +48,7 @@ public class UserServlet extends HttpServlet {
           boolean active;
           String incomingEmail = "";
           
-          
+           System.out.println("code reaches here");
           //int roleNum = Integer.parseInt(role);
           active = request.getParameter("active") != null;
         System.out.println("code runs till here!!");
@@ -121,20 +121,40 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("DatabaseError", true);
             }
                 
-            case "deleteuser":    
-                
-            break;
-                 
-                
+            case "deleteuser": 
+                System.out.println("code reaches here");
+                String delEmail = request.getParameter("actionVal");
+                 System.out.println(delEmail);
+                //User deleted = new User();
+               user.delete(delEmail);
+               
+               
+               try {
+            List<User> userobj = user.getALL();
+            request.setAttribute("user", userobj);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("DatabaseError", true);
         }
-        //if(request.getAttribute("adduser")!= null){
-             //System.out.println("if statment holds true");
-            //user.insert(email, active, firstname, lastname, password,Integer.parseInt(role));
-           // request.setAttribute("addSuccess", true);
-           // getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
-       // return;
+                 
+            break;
+            
+            case "cancel":
+                
+                User nUser = new User();
+                newUser = user.edit(incomingEmail);               
+                String cancelEmail= newUser.getEmail();
+                String cancelFname = newUser.getFname() ;
+                String cancelLname = newUser.getLname();
+                String cancelRole = newUser.getRole();               
+                request.setAttribute("editEmail", "");
+                request.setAttribute("editFname", "");
+                request.setAttribute("editLname", "");
+                request.setAttribute("editRole", "");
+                       
+        }
         
-        
+       
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
         return;
         
