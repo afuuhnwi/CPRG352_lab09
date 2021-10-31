@@ -161,12 +161,9 @@ public class RoleDB {
             if (!webpageUser[3].equals("") ) {
                 sql = "Update user SET role=? WHERE email=?";
                 String convertRole = webpageUser[3];
-                Integer role = Integer.parseInt(convertRole);
-                
-                
+                Integer role = Integer.parseInt(convertRole);                               
                 try {
-                ps = con.prepareStatement(sql);
-                
+                ps = con.prepareStatement(sql);               
                 ps.setInt(1, role);
                 ps.setString(2, email);
                 ps.executeUpdate();
@@ -174,7 +171,13 @@ public class RoleDB {
                 DBUtil.closePreparedStatement(ps);
                 cp.freeConnection(con);
                 } 
-            }  
+            }
+            
+            
+        } else {
+            insertNewUser(user);
+            
+            
         }
       
         return user;

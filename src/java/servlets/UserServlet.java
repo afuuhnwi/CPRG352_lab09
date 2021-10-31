@@ -113,7 +113,13 @@ public class UserServlet extends HttpServlet {
                 User updateUser = new User();
                 updateUser = user.update(incomingEmail, webpageUser);
                 
-                updateUser.getFname();
+                try {
+            List<User> userobj = user.getALL();
+            request.setAttribute("user", userobj);
+            } catch (SQLException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("DatabaseError", true);
+            }
                 
             case "deleteuser":    
                 
