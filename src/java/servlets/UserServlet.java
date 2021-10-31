@@ -102,10 +102,18 @@ public class UserServlet extends HttpServlet {
             break;            
         case "update":
                 
+                String webpageEmail = request.getParameter("editEmail");
+                String webpageFname = request.getParameter("editFirstName");
+                String webpageLname = request.getParameter("editLastName");
+                String webpageRole = request.getParameter("editSystemRole");
+                String[] webpageUser = {webpageEmail, webpageFname, webpageLname, webpageRole};
+                
+                
+                
                 User updateUser = new User();
-                updateUser = user.update(incomingEmail);
+                updateUser = user.update(incomingEmail, webpageUser);
                 
-                
+                updateUser.getFname();
                 
             case "deleteuser":    
                 

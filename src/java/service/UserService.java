@@ -40,16 +40,17 @@ public class UserService {
         }
         return user;
     }
-    public User update(String email) {
+    public User update(String email, String[]webpageUser) {
         RoleDB updateUser = new RoleDB();
         User user = new User();
         
         try {
-            user= updateUser.updateUser(email);
+            user= updateUser.updateUser(email, webpageUser);
         } catch (Exception ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
+        
     }
     
     

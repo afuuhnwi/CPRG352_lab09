@@ -121,31 +121,62 @@ public class RoleDB {
         return user;       
     }
     
-    public User updateUser(String email) throws Exception{
+    public User updateUser(String email, String[]webpageUser) throws Exception{
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
-        String sql = "Update user SET fname=?, lname=?, role=? WHERE email=?";
+        String sql;
         User user = new User();
         user = get(email);
         String originalEmail = user.getEmail();
         
-        if(email.equals(originalEmail)  ) {
-            try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, user.getFname());
-            ps.setString(2, user.getLname());
-            ps.setString(3, user.getRole());
-            ps.executeUpdate();
-            }finally {
+        
+        if(email.equals(originalEmail)) {
+            
+            if(!webpageUser[1].equals(user.getFname()) ) {
+                sql = "Update user SET first_name=? WHERE email=?";
+                try {
+                ps = con.prepareStatement(sql);
+                ps.setString(1, webpageUser[1]);
+                ps.setString(2, email);
+                ps.executeUpdate();
+                }finally {
                 DBUtil.closePreparedStatement(ps);
                 cp.freeConnection(con);
-            } 
+                } 
+            }
+            if(!webpageUser[2].equals(user.getLname()) ) {
+                sql = "Update user SET last_name=? WHERE email=?";
+                try {
+                ps = con.prepareStatement(sql);
+                ps.setString(1, webpageUser[2]);
+                ps.setString(2, email);
+                ps.executeUpdate();
+                }finally {
+                DBUtil.closePreparedStatement(ps);
+                cp.freeConnection(con);
+                } 
+            }
             
-            
+            if (!webpageUser[3].equals("") ) {
+                sql = "Update user SET role=? WHERE email=?";
+                String convertRole = webpageUser[3];
+                Integer role = Integer.parseInt(convertRole);
+                
+                
+                try {
+                ps = con.prepareStatement(sql);
+                
+                ps.setInt(1, role);
+                ps.setString(2, email);
+                ps.executeUpdate();
+                } finally {
+                DBUtil.closePreparedStatement(ps);
+                cp.freeConnection(con);
+                } 
+            }  
         }
-        
-        
+      
         return user;
         
     }
