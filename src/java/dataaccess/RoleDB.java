@@ -129,7 +129,7 @@ public class RoleDB {
         String originalEmail = user.getEmail();
         
         
-        if(email.equals(originalEmail)) {
+        if(email.equals(webpageUser[0])) {
             
             if(!webpageUser[1].equals(user.getFname()) ) {
                 ConnectionPool cp = ConnectionPool.getInstance();
@@ -182,9 +182,9 @@ public class RoleDB {
             
             
         } else {
+            user.setEmail(webpageUser[0]);
             insertNewUser(user);
-            
-            
+            //delete user after (going to use the delete method)           
         }
       
         return user;
