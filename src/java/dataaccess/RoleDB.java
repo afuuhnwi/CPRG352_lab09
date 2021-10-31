@@ -122,9 +122,7 @@ public class RoleDB {
     }
     
     public User updateUser(String email, String[]webpageUser) throws Exception{
-        ConnectionPool cp = ConnectionPool.getInstance();
-        Connection con = cp.getConnection();
-        PreparedStatement ps = null;
+        
         String sql;
         User user = new User();
         user = get(email);
@@ -134,6 +132,9 @@ public class RoleDB {
         if(email.equals(originalEmail)) {
             
             if(!webpageUser[1].equals(user.getFname()) ) {
+                ConnectionPool cp = ConnectionPool.getInstance();
+                Connection con = cp.getConnection();
+                PreparedStatement ps = null;
                 sql = "Update user SET first_name=? WHERE email=?";
                 try {
                 ps = con.prepareStatement(sql);
@@ -146,6 +147,9 @@ public class RoleDB {
                 } 
             }
             if(!webpageUser[2].equals(user.getLname()) ) {
+                ConnectionPool cp = ConnectionPool.getInstance();
+                Connection con = cp.getConnection();
+                PreparedStatement ps = null;
                 sql = "Update user SET last_name=? WHERE email=?";
                 try {
                 ps = con.prepareStatement(sql);
@@ -159,6 +163,9 @@ public class RoleDB {
             }
             
             if (!webpageUser[3].equals("") ) {
+                ConnectionPool cp = ConnectionPool.getInstance();
+                Connection con = cp.getConnection();
+                PreparedStatement ps = null;
                 sql = "Update user SET role=? WHERE email=?";
                 String convertRole = webpageUser[3];
                 Integer role = Integer.parseInt(convertRole);                               
