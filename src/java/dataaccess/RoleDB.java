@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.DispatcherType;
 import models.User;
 
 /**
@@ -129,11 +128,13 @@ public class RoleDB {
         String originalEmail = user.getEmail();
         
         
-        if(email.equals(webpageUser[0])) {
-            
-            if(!webpageUser[1].equals(user.getFname()) ) {
-                ConnectionPool cp = ConnectionPool.getInstance();
-                Connection con = cp.getConnection();
+        if(!email.equals(webpageUser[0])) {
+            user.setEmail(webpageUser[0]);
+            insertNewUser(user);
+        }  
+        if(!webpageUser[1].equals(user.getFname()) ) {
+            ConnectionPool cp = ConnectionPool.getInstance();
+            Connection con = cp.getConnection();
                 PreparedStatement ps = null;
                 sql = "Update user SET first_name=? WHERE email=?";
                 try {
@@ -181,11 +182,7 @@ public class RoleDB {
             }
             
             
-        } else {
-            user.setEmail(webpageUser[0]);
-            insertNewUser(user);
-            //delete user after (going to use the delete method)           
-        }
+        
       
         return user;
         
