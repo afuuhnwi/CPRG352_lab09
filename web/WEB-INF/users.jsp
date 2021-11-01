@@ -32,8 +32,8 @@
                     <option value="1">System Admin</option>
                     <option value="2">Regular User</option>
                     <option value="3">Company Admin</option>
-                </select> <br>    
-                <input type="submit" value="Save" >
+                </select> <br> <br>   
+                <input type="submit" class="button" value="Save" >
                 <input type="hidden" name="action" value="adduser">
             </form>
             <c:if test="addSuccess">
@@ -96,10 +96,11 @@
                 <option value="2">Regular User</option>
                 <option value="3">Company Admin</option>
             </select> <br>
-                <input type="submit"  value="Save">
-                 <input type="hidden" name="action" value="update,${editEmail}"><br>
-                <input type="submit" value="Cancel">
-                <input type="hidden" value="action" value="cancel">
+                <input type="submit" class ="button" value="Save">
+                <input type="hidden" name="action" value="update,${editEmail}"><br>
+                <br>
+                <input type="submit" class="button" value="Cancel">
+                <input type="hidden"  value="action" value="cancel">
                 
             </form>
         </div>
