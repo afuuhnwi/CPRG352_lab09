@@ -144,7 +144,7 @@ public class RoleDB {
                 try {
                 ps = con.prepareStatement(sql);
                 ps.setString(1, webpageUser[1]);
-                ps.setString(2, email);
+                ps.setString(2, webpageUser[0]);
                 ps.executeUpdate();
                 }finally {
                 DBUtil.closePreparedStatement(ps);
@@ -159,7 +159,7 @@ public class RoleDB {
                 try {
                 ps = con.prepareStatement(sql);
                 ps.setString(1, webpageUser[2]);
-                ps.setString(2, email);
+                ps.setString(2, webpageUser[0]);
                 ps.executeUpdate();
                 }finally {
                 DBUtil.closePreparedStatement(ps);
@@ -177,7 +177,7 @@ public class RoleDB {
                 try {
                 ps = con.prepareStatement(sql);               
                 ps.setInt(1, role);
-                ps.setString(2, email);
+                ps.setString(2, webpageUser[0]);
                 ps.executeUpdate();
                 
                 } finally {
