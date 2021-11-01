@@ -120,8 +120,8 @@ public class UserServlet extends HttpServlet {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
             }
-                
-            case "deleteuser": 
+            break;    
+        case "deleteuser": 
                 System.out.println("code reaches here");
                 String delEmail = request.getParameter("actionVal");
                  System.out.println(delEmail);

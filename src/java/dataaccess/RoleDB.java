@@ -129,8 +129,12 @@ public class RoleDB {
         
         
         if(!email.equals(webpageUser[0])) {
-            user.setEmail(webpageUser[0]);
-            insertNewUser(user);
+            
+            User deleteUser = new User(user.getEmail() ,user.getActive() ,user.getFname(), user.getLname(), user.getRole());
+            user.setEmail(webpageUser[0]); 
+            insertNewUser(user);                     
+            deleteUser(deleteUser);
+            
         }  
         if(!webpageUser[1].equals(user.getFname()) ) {
             ConnectionPool cp = ConnectionPool.getInstance();
@@ -175,6 +179,7 @@ public class RoleDB {
                 ps.setInt(1, role);
                 ps.setString(2, email);
                 ps.executeUpdate();
+                
                 } finally {
                 DBUtil.closePreparedStatement(ps);
                 cp.freeConnection(con);
