@@ -116,6 +116,7 @@ public class UserServlet extends HttpServlet {
                 try {
             List<User> userobj = user.getALL();
             request.setAttribute("user", userobj);
+            request.setAttribute("updateMessage", "Edit User Successful");
             } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);

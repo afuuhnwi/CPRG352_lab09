@@ -33,6 +33,9 @@ and open the template in the editor.
         table,td,th{
             border: graytext;
             border-style: double; 
+            padding-left: 13px;
+            padding-right:5px;
+            margin-right:10px;
         }
         .addUser, .editUser {
             background-color: #f4f4f4;
@@ -97,3 +100,4 @@ and open the template in the editor.
         .delete{
             
         }
+        

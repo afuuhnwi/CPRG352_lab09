@@ -61,7 +61,7 @@
                  <fieldset>
 
                      <legend><h2>Manage Users</h2></legend>
-                <table style="width: 50%" cellpadding="2" cellwidth="7%" border="1">
+                <table style="width: 55%" cellpadding="2" cellwidth="7%" border="1">
 
 
                          <tr>
@@ -70,8 +70,10 @@
                         <th>First Name</th>                   
                         <th>Last Name</th>                  
                         <th>Role</th>
+                         <div class ="spacing">
                         <th>Edit</th>
                         <th>Delete</th>
+                        </div>
                          </tr>
                         <c:forEach var="user" items="${user}">
                             <tr>
@@ -116,6 +118,7 @@
                     <input type="submit" class ="button" value="Save">
                     <input type="hidden" name="action" value="update,${editEmail}"><br>
                     <br>
+                    ${updateMessage}
                     <input type="submit" class="button" value="Cancel">
                     <input type="hidden"  value="action" value="cancel">
 
