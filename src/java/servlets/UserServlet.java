@@ -16,22 +16,32 @@ import service.UserService;
 
 public class UserServlet extends HttpServlet {
 
+    private final int pageSize = 5;
+    private int page = 1;
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         UserService user = new UserService();
+       
         try {
-            List<User> userobj = user.getALL();
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (Exception ex) {
+            // not necessary to log exception since it is not important
+        }
+        
+        try {
+            List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
         } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
         }
-        
+        request.setAttribute("page", page);
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
         return;
-        
+       
     }
 
     @Override
@@ -47,6 +57,11 @@ public class UserServlet extends HttpServlet {
           String role = request.getParameter("systemRole");
           boolean active;
           String incomingEmail = "";
+          try {
+            page = Integer.parseInt(request.getParameter("page"));
+         } catch (Exception ex) {
+            // not necessary to log exception since it is not important
+        }
           
            System.out.println("code reaches here");
           //int roleNum = Integer.parseInt(role);
@@ -74,7 +89,7 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("addSuccess", true);
             
             try {
-            List<User> userobj = user.getALL();
+            List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
         } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,7 +120,7 @@ public class UserServlet extends HttpServlet {
                 
                 
             try {
-                List<User> userobj = user.getALL();
+                List<User> userobj = user.getALL(page, pageSize);
                 request.setAttribute("user", userobj);
             }catch (SQLException ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -123,7 +138,7 @@ public class UserServlet extends HttpServlet {
                 updateUser = user.update(incomingEmail, webpageUser);
                 
                 try {
-            List<User> userobj = user.getALL();
+            List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
             
             if (!webpageEmail.equals("") || !webpageFname.equals("") || !webpageLname.equals("") || !webpageRole.equals("")) {        
@@ -143,7 +158,7 @@ public class UserServlet extends HttpServlet {
                
                
                try {
-            List<User> userobj = user.getALL();
+            List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
         } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);

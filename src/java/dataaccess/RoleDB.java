@@ -21,15 +21,16 @@ import models.User;
  */
 public class RoleDB {
     
-    public List<User> getAll() throws SQLException{
+    public List<User> getAll(int offset, int count) throws SQLException{
         
         List<User> users = new ArrayList<>();
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection connect = cp.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        int page = 1;
-        int numberPerPage = 5;
+        
+        
+        int i = 0;
         
         String selectAll = "SELECT `email`, `active` ,`first_name`,`last_name`,`role_name` FROM user,role \n" +
                            "WHERE `role_id` = `role`;";
@@ -37,17 +38,24 @@ public class RoleDB {
             ps = connect.prepareStatement(selectAll);
             rs = ps.executeQuery();
             while(rs.next()){
-                String email = rs.getString(1);
-                Boolean active = rs.getBoolean(2);
-                String firstName = rs.getString(3);
-                String lastName = rs.getString(4);
-                String roleName = rs.getString(5);
+                i++;
+                if (i <= offset) {
+                    
+                    
+                     
+                    continue;
+                }                             
+                if (i > offset + count) {
+                    break;
+                }
                 
-                User userobj = new User( email,active ,firstName, lastName, roleName);
+                User userobj = new User( rs.getString(1), rs.getBoolean(2) ,rs.getString(3), rs.getString(4), rs.getString(5) );
+                     users.add(userobj);
+                    
+                 
                 
-                users.add(userobj);
                 
-                        
+                                      
             }
         }
         finally{

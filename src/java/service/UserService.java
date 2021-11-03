@@ -18,9 +18,9 @@ import models.User;
  */
 public class UserService {
     
-    public List<User> getALL() throws SQLException{
+    public List<User> getALL(int page, int pageSize) throws SQLException{
     RoleDB role = new RoleDB();
-    List<User> user = role.getAll();
+    List<User> user = role.getAll((page - 1) * pageSize, pageSize);
     return user;
       }
     

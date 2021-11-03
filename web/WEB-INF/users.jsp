@@ -90,14 +90,18 @@
                                 <td><button class="del"><i class="fa fa-trash"></i></button></td>
                                 <input type="hidden" name="action" value="deleteuser,${user.email}">
                                 <input type="hidden" name="actionVal" value="${user.email}">
-                            </form>
-
+                            </form>                           
                         </tr>
                         </c:forEach>
 
                 </table>
                    </fieldset> 
-
+                 <div class="paging">
+                     <h4>page ${page} </h4>
+                     <a href="users?page=${page - 1}">&lt;Back </a>
+                     <a href="users?page=${page + 1}"> Forward&gt;</a>
+                 </div>
+                     
              </div>
 
             <div class="editUser">
