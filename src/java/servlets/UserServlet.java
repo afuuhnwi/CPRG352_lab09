@@ -60,7 +60,10 @@ public class UserServlet extends HttpServlet {
         if(action.contains(",")) {
             String [] str = action.split(",");
             action = str[0];
+            
+            if (str != null && str.length == 2) {
             incomingEmail = str[1];
+            }
         }
         
         switch(action){
@@ -90,7 +93,16 @@ public class UserServlet extends HttpServlet {
                 request.setAttribute("editEmail", editEmail);
                 request.setAttribute("editFname", editFname);
                 request.setAttribute("editLname", editLname);
+                
+                if(editRole.equals("1")){
+                    editRole = "System Admin";
+                }else if (editRole.equals("2")){
+                    editRole="Regular User";
+                }else if (editRole.equals("3")) {
+                    editRole = "Company Admin";
+                }
                 request.setAttribute("editRole", editRole);
+                
                 
             try {
                 List<User> userobj = user.getALL();
@@ -106,17 +118,17 @@ public class UserServlet extends HttpServlet {
                 String webpageFname = request.getParameter("editFirstName");
                 String webpageLname = request.getParameter("editLastName");
                 String webpageRole = request.getParameter("editSystemRole");
-                String[] webpageUser = {webpageEmail, webpageFname, webpageLname, webpageRole};
-                
-                
-                
+                String[] webpageUser = {webpageEmail, webpageFname, webpageLname, webpageRole};                                           
                 User updateUser = new User();
                 updateUser = user.update(incomingEmail, webpageUser);
                 
                 try {
             List<User> userobj = user.getALL();
             request.setAttribute("user", userobj);
+            
+            if (!webpageEmail.equals("") || !webpageFname.equals("") || !webpageLname.equals("") || !webpageRole.equals("")) {        
             request.setAttribute("updateMessage", "Edit User Successful");
+            }
             } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);

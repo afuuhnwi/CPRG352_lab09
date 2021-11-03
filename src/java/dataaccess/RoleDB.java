@@ -28,6 +28,8 @@ public class RoleDB {
         Connection connect = cp.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
+        int page = 1;
+        int numberPerPage = 5;
         
         String selectAll = "SELECT `email`, `active` ,`first_name`,`last_name`,`role_name` FROM user,role \n" +
                            "WHERE `role_id` = `role`;";
