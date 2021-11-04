@@ -60,7 +60,14 @@ public class UserServlet extends HttpServlet {
           String role = request.getParameter("systemRole");
           boolean active;
           String incomingEmail = "";
-          int page = Integer.parseInt(request.getParameter("page"));
+          String pageConvert = request.getParameter("page");
+          int page = 1;
+          if (pageConvert != null){
+              page = Integer.parseInt(request.getParameter("page"));    
+              
+          }
+         request.setAttribute("page", page);
+          
           
            System.out.println("code reaches here");
           //int roleNum = Integer.parseInt(role);
