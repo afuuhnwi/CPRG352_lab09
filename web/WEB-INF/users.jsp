@@ -98,8 +98,13 @@
                    </fieldset> 
                  <div class="paging">
                      <h4>page ${page} </h4>
+                     <c:if test="${page > 1}">
                      <a href="users?page=${page - 1}">&lt;Back </a>
+                     </c:if>
+                     
+                     <c:if test="${page < end}">
                      <a href="users?page=${page + 1}"> Forward&gt;</a>
+                     </c:if>
                  </div>
                      
              </div>

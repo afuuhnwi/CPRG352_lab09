@@ -17,12 +17,12 @@ import service.UserService;
 public class UserServlet extends HttpServlet {
 
     private final int pageSize = 5;
-    private int page = 1;
+   
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int page = 1;
         UserService user = new UserService();
        
         try {
@@ -34,6 +34,9 @@ public class UserServlet extends HttpServlet {
         try {
             List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
+            double end = userobj.size();            
+            request.setAttribute("end", end);
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
@@ -57,11 +60,7 @@ public class UserServlet extends HttpServlet {
           String role = request.getParameter("systemRole");
           boolean active;
           String incomingEmail = "";
-          try {
-            page = Integer.parseInt(request.getParameter("page"));
-         } catch (Exception ex) {
-            // not necessary to log exception since it is not important
-        }
+          int page = Integer.parseInt(request.getParameter("page"));
           
            System.out.println("code reaches here");
           //int roleNum = Integer.parseInt(role);
