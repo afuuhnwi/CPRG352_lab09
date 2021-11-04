@@ -41,8 +41,7 @@ public class RoleDB {
                 i++;
                 if (i <= offset) {
                     
-                    
-                     
+                                       
                     continue;
                 }                             
                 if (i > offset + count) {

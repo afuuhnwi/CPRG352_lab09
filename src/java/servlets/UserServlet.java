@@ -17,12 +17,12 @@ import service.UserService;
 public class UserServlet extends HttpServlet {
 
     private final int pageSize = 5;
-   
+    int page = 1;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int page = 1;
+        
         UserService user = new UserService();
        
         try {
@@ -61,13 +61,19 @@ public class UserServlet extends HttpServlet {
           boolean active;
           String incomingEmail = "";
           String pageConvert = request.getParameter("page");
-          int page = 1;
+          
           if (pageConvert != null){
               page = Integer.parseInt(request.getParameter("page"));    
               
           }
          request.setAttribute("page", page);
-          
+         
+         try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (Exception ex) {
+            // not necessary to log exception since it is not important
+        } 
+         
           
            System.out.println("code reaches here");
           //int roleNum = Integer.parseInt(role);
@@ -97,6 +103,8 @@ public class UserServlet extends HttpServlet {
             try {
             List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
+            double end = userobj.size();            
+            request.setAttribute("end", end);
         } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
@@ -128,6 +136,8 @@ public class UserServlet extends HttpServlet {
             try {
                 List<User> userobj = user.getALL(page, pageSize);
                 request.setAttribute("user", userobj);
+                double end = userobj.size();            
+                request.setAttribute("end", end);
             }catch (SQLException ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("EditUserError", true);
@@ -146,6 +156,8 @@ public class UserServlet extends HttpServlet {
                 try {
             List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
+            double end = userobj.size();            
+            request.setAttribute("end", end);
             
             if (!webpageEmail.equals("") || !webpageFname.equals("") || !webpageLname.equals("") || !webpageRole.equals("")) {        
             request.setAttribute("updateMessage", "Edit User Successful");
@@ -166,6 +178,9 @@ public class UserServlet extends HttpServlet {
                try {
             List<User> userobj = user.getALL(page, pageSize);
             request.setAttribute("user", userobj);
+            double end = userobj.size();            
+            request.setAttribute("end", end);
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
