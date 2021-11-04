@@ -102,7 +102,7 @@
                      <a href="users?page=${page - 1}">&lt;Back </a>
                      </c:if>
                      
-                     <c:if test="${page < end}">
+                     <c:if test="${page < end - 1}">
                      <a href="users?page=${page + 1}"> Forward&gt;</a>
                      </c:if>
                  </div>
