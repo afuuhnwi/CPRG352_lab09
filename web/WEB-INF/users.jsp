@@ -79,8 +79,8 @@
                             <tr>
                             <td><c:out value="${user.email}"></c:out></td>
                             <td><c:out value="${user.active}"></c:out></td>
-                            <td><c:out value="${user.fname}"></c:out></td>
-                            <td><c:out value="${user.lname}"></c:out></td>
+                            <td><c:out value="${user.firstName}"></c:out></td>
+                            <td><c:out value="${user.lastName}"></c:out></td>
                             <td><c:out value="${user.role}"></c:out></td>
                             <form method="POST" action ="users">
                                 <td><button class="edt"><i class="fa fa-edit"></i></button></td>
@@ -96,16 +96,6 @@
 
                 </table>
                    </fieldset> 
-                 <div class="paging">
-                     <h4>page ${page} </h4>
-                     <c:if test="${page > 1}">
-                     <a href="users?page=${page - 1}">&lt;Back </a>
-                     </c:if>
-                     
-                     <c:if test="${page < end - 1}">
-                     <a href="users?page=${page + 1}"> Forward&gt;</a>
-                     </c:if>
-                 </div>
                      
              </div>
 

@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Role;
 import models.User;
 import service.UserService;
 
@@ -32,7 +33,7 @@ public class UserServlet extends HttpServlet {
         }
         
         try {
-            List<User> userobj = user.getALL(page, pageSize);
+            List<User> userobj = user.getALL();
             request.setAttribute("user", userobj);
             double end = userobj.size();            
             request.setAttribute("end", end);
@@ -61,8 +62,9 @@ public class UserServlet extends HttpServlet {
           boolean active;
           String incomingEmail = "";
           String pageConvert = request.getParameter("page");
+          int userRole = 0;
           
-          if (pageConvert != null){
+          /*if (pageConvert != null){
               page = Integer.parseInt(request.getParameter("page"));    
               
           }
@@ -72,7 +74,7 @@ public class UserServlet extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         } catch (Exception ex) {
             // not necessary to log exception since it is not important
-        } 
+        } */
          
           
            System.out.println("code reaches here");
@@ -97,51 +99,53 @@ public class UserServlet extends HttpServlet {
             case "adduser": 
                
                 System.out.println("if statment holds true");
-            user.insert(email, active, firstname, lastname, password,role);
+          {
+              try {
+                  user.insert(email, active, firstname, lastname, password,role);
+              } catch (Exception ex) {
+                  Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+              }
+          }
             request.setAttribute("addSuccess", true);
             
             try {
-            List<User> userobj = user.getALL(page, pageSize);
+            List<User> userobj = user.getALL();
             request.setAttribute("user", userobj);
             double end = userobj.size();            
             request.setAttribute("end", end);
+            
         } catch (SQLException ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
         }
         
-            break;  
+            break;    
             
         case "edituser":
                 User newUser = new User();
                 newUser = user.edit(incomingEmail);               
                 String editEmail= newUser.getEmail();
-                String editFname = newUser.getFname() ;
-                String editLname = newUser.getLname();
-                String editRole = newUser.getRole();               
+                String editFname = newUser.getFirstName() ;
+                String editLname = newUser.getLastName();
+                Role editRole = newUser.getRole();               
                 request.setAttribute("editEmail", editEmail);
                 request.setAttribute("editFname", editFname);
                 request.setAttribute("editLname", editLname);
                 
-                if(editRole.equals("1")){
-                    editRole = "System Admin";
-                }else if (editRole.equals("2")){
-                    editRole="Regular User";
-                }else if (editRole.equals("3")) {
-                    editRole = "Company Admin";
-                }
+                
                 request.setAttribute("editRole", editRole);
                 
                 
             try {
-                List<User> userobj = user.getALL(page, pageSize);
-                request.setAttribute("user", userobj);
-                double end = userobj.size();            
-                request.setAttribute("end", end);
-            }catch (SQLException ex) {
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("EditUserError", true);
-            }
+            List<User> userobj = user.getALL();
+            request.setAttribute("user", userobj);
+            double end = userobj.size();            
+            request.setAttribute("end", end);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("DatabaseError", true);
+        }
             break;            
         case "update":
                 
@@ -149,12 +153,19 @@ public class UserServlet extends HttpServlet {
                 String webpageFname = request.getParameter("editFirstName");
                 String webpageLname = request.getParameter("editLastName");
                 String webpageRole = request.getParameter("editSystemRole");
+                userRole = Integer.parseInt(webpageRole);
                 String[] webpageUser = {webpageEmail, webpageFname, webpageLname, webpageRole};                                           
                 User updateUser = new User();
-                updateUser = user.update(incomingEmail, webpageUser);
+          {
+              try {
+                  user.update(webpageEmail,webpageFname,webpageLname, userRole);
+              } catch (Exception ex) {
+                  Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+              }
+          }
                 
                 try {
-            List<User> userobj = user.getALL(page, pageSize);
+            List<User> userobj = user.getALL();
             request.setAttribute("user", userobj);
             double end = userobj.size();            
             request.setAttribute("end", end);
@@ -166,7 +177,7 @@ public class UserServlet extends HttpServlet {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("DatabaseError", true);
             }
-            break;    
+            break;        
         case "deleteuser": 
                 System.out.println("code reaches here");
                 String delEmail = request.getParameter("actionVal");
@@ -175,16 +186,8 @@ public class UserServlet extends HttpServlet {
                user.delete(delEmail);
                
                
-               try {
-            List<User> userobj = user.getALL(page, pageSize);
-            request.setAttribute("user", userobj);
-            double end = userobj.size();            
-            request.setAttribute("end", end);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("DatabaseError", true);
-        }
+               List<User> userobj = null;
+         
                  
             break;
             
@@ -193,15 +196,16 @@ public class UserServlet extends HttpServlet {
                 User nUser = new User();
                 newUser = user.edit(incomingEmail);               
                 String cancelEmail= newUser.getEmail();
-                String cancelFname = newUser.getFname() ;
-                String cancelLname = newUser.getLname();
-                String cancelRole = newUser.getRole();               
+                String cancelFname = newUser.getFirstName() ;
+                String cancelLname = newUser.getLastName();
+                Role cancelRole = newUser.getRole();               
                 request.setAttribute("editEmail", "");
                 request.setAttribute("editFname", "");
                 request.setAttribute("editLname", "");
                 request.setAttribute("editRole", "");
                        
         }
+        
         
        
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);

@@ -6,10 +6,12 @@
 package service;
 
 import dataaccess.RoleDB;
+import dataaccess.UserDB;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Role;
 import models.User;
 
 /**
@@ -18,20 +20,21 @@ import models.User;
  */
 public class UserService {
     
-    public List<User> getALL(int page, int pageSize) throws SQLException{
+    public List<User> getALL() throws SQLException{
     RoleDB role = new RoleDB();
-    List<User> user = role.getAll((page - 1) * pageSize, pageSize);
+    List<User> user = role.getAll();
     return user;
       }
     
-    public void insert(String email,boolean active ,String firstname,String lastname,String password,String role ){
+    public void insert(String email,boolean active ,String firstname,String lastname,String password,String role) throws Exception{
         User user = new User(email,active,firstname,lastname,password,role);
-        RoleDB insertRole = new RoleDB();
-        insertRole.insertNewUser(user);
+        UserDB userDb = new UserDB();
+        userDb.insert(user);
         
     }
+    
     public User edit(String email) {
-        RoleDB editUser = new RoleDB();
+        UserDB editUser = new UserDB();
         User user = new User();
         try {      
             user = editUser.get(email);
@@ -39,22 +42,29 @@ public class UserService {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
-    }
-    public User update(String email, String[]webpageUser) {
-        RoleDB updateUser = new RoleDB();
-        User user = new User();
-        
-        try {
-            user= updateUser.updateUser(email, webpageUser);
-        } catch (Exception ex) {
-            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return user;
         
     }
     
+    public void update(String email,String firstname,String lastname,int roleid) throws Exception {
+        RoleDB roledb = new RoleDB();
+        UserDB userdb = new UserDB();
+        User get =  userdb.get(email);
+        
+        //User role = userdb.get(roleid);
+      
+        get.setFirstName(firstname);
+        get.setLastName(lastname);
+        
+        //user.setRole(role);
+        
+        Role update = roledb.get(roleid);
+        get.setRole(update);
+        userdb.updateUser(get);
+                
+    }
+    
     public void delete(String email){
-        RoleDB deletUser = new RoleDB();
+        UserDB deletUser = new UserDB();
         User user = new User(email);
         deletUser.deleteUser(user);
     }
